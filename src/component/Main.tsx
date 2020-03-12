@@ -9,6 +9,7 @@ type State = {
 
 type Props = {
     todoList: Todo[]
+    handleCheck: (position: number) => void
 }
 
 class Main extends Component<Props, State> {
@@ -22,6 +23,10 @@ class Main extends Component<Props, State> {
         };
     }
 
+    handleCheck(position: number) {
+        this.props.handleCheck(position)
+    }
+
     render() {
         return (
             <div className="section">
@@ -31,7 +36,8 @@ class Main extends Component<Props, State> {
                             <li key={index} className="collection-item">
                                 <p>
                                     <label>
-                                        <input type="checkbox" checked={todoItem.isChecked} />
+                                        <input type="checkbox" checked={todoItem.isChecked}
+                                               onClick={this.handleCheck.bind(this, index)}/>
                                         <span>{todoItem.title}</span>
                                     </label>
                                 </p>
@@ -42,7 +48,9 @@ class Main extends Component<Props, State> {
                 {
                     (() => {
                         if (this.state.showLoadMore)
-                            return <div className="center-align"><button className="btn btn-flat" onClick={this.loadMore.bind(this)}>Load More</button></div>
+                            return <div className="center-align">
+                                <button className="btn btn-flat" onClick={this.loadMore.bind(this)}>Load More</button>
+                            </div>
                     })()
                 }
 
